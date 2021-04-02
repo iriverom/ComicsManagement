@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Table</h2>
+        <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under
+            768px). When viewing on anything larger than 768px wide, there is no difference:</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Client Number</th>
+                        <th>Name</th>
+                        <th>Series</th>
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line in suscription_list %}
+                    <tr>
+                        <td>{{ line.client.client_number }}</td>
+                        <td>{{ line.client.first_name }} {{ line.client.last_name }}</td>
+                        <td>{{ line.series }}</td>
+                        <td>{{ line.begin_date }}</td>
+                        <td>{{ line.end_date }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

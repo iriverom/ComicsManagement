@@ -1,0 +1,18 @@
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 0px;
+    /*max-width: 900px; /* or 950px */
+  }
+
+a.button {
+    background-color: white;
+    color: black;
+    border: 2px solid #484b48;
+    /* padding: 15px 32px;*/
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 40px 1100px 0px;
+    cursor: pointer;
+    }

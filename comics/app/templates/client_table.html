@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -6,14 +7,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'client_table_style.css' %}">
 </head>
 
 <body>
-    <button type="button" class="btn btn-light">Light</button>
+    <div>
+        <a href="{% url 'addclient' %}" class="button btn btn-light">Add/Edit Client</a>
+    </div>
     <div class="container">
         <h2>Client list</h2>
-        <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under
-            768px). When viewing on anything larger than 768px wide, there is no difference:</p>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -31,7 +33,7 @@
                     {% for line in latest_client_list %}
                     <tr>
                         <td>
-                            <a href="{% url 'suscription' line.client_number %}">
+                            <a href="{% url 'subscription' line.client_number %}">
                                 <div style="height:100%;width:100%">
                                     {{ line.client_number }}
                                 </div>

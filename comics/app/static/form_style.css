@@ -2,5 +2,6 @@
 .container-fluid {
     margin-right: auto;
     margin-left: auto;
+    margin-top: 75px;
     max-width: 900px; /* or 950px */
   }

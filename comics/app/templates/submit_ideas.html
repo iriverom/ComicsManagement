@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'form_style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <form action="/app/your-name/" method="POST" role="form">
+                    {% if form.subject.errors %}
+                    <ol role="alertdialog">
+                        {% for error in form.subject.errors %}
+                        <li role="alert"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+
+                    {% for field in form %}
+                    <div class="fieldWrapper form-group" aria-required={% if field.field.required %}"true"{% else
+                        %}"false"{% endif %}>
+                        {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary mb-2" value="Submit" />
+                </form>
+            </div>
+            <div class="col-md-4">
+                <!-- Other column -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

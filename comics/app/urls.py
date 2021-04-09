@@ -10,5 +10,15 @@ urlpatterns = [
     path("client/<slug:slug>/", views.client_subscription, name="subscription"),
     path("client/<slug:slug>", views.client_subscription, name="subscription"),
     path("addclient/", views.add_client, name="addclient"),
-    path("clientadded/", views.add_client, name="testtest"),
+    path("clientadded/", views.add_client, name="clientadded"),
+    path(
+        "client/<slug:slug>/addsubscription",
+        views.add_subscription,
+        name="addsubscription",
+    ),
+    path(
+        "client/<slug:slug>/subscriptionadded/",
+        views.add_subscription,
+        name="subscriptionadded",
+    ),
 ]

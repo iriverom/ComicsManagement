@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -6,14 +7,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'suscription_table_style.css' %}">
 </head>
 
 <body>
-
+    <div class="container2">
+        <div class="buttons">
+            <a href="{% url 'addsubscription' slug_field %}" class="button btn btn-light">Add a new suscription</a>
+            <a href="{% url 'client' %}" class="button btn btn-light">Back to Client list</a>
+        </div>
+    </div>
     <div class="container">
-        <h2>Table</h2>
-        <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under
-            768px). When viewing on anything larger than 768px wide, there is no difference:</p>
+        <h2>Suscription Table</h2>
+        <p>This table shows to which series is the client suscribed</p>
         <div class="table-responsive">
             <table class="table">
                 <thead>

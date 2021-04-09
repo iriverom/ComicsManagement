@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from app.models import Client
+from app.models import Client, Suscription
 
 
 class NameForm(forms.Form):
@@ -27,4 +27,21 @@ class ClientForm(ModelForm):
             "registration_date": forms.DateInput(attrs={"class": "form-control"}),
             "address": forms.TextInput(attrs={"class": "form-control"}),
             "email_address": forms.EmailInput(attrs={"class": "form-control"}),
+        }
+
+
+class SubscriptionForm(ModelForm):
+    class Meta:
+        model = Suscription
+        fields = [
+            "client",
+            "series",
+            "begin_date",
+            "end_date",
+        ]
+        widgets = {
+            "client": forms.TextInput(attrs={"class": "form-control"}),
+            "series": forms.TextInput(attrs={"class": "form-control"}),
+            "begin_date": forms.DateInput(attrs={"class": "form-control"}),
+            "end_date": forms.DateInput(attrs={"class": "form-control"}),
         }

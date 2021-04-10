@@ -30,18 +30,12 @@ def add_client(request):
 
 
 def add_subscription(request, slug):
-
-    SubscriptionForm.base_fields["client"] = forms.ModelChoiceField(
-        Client.objects.filter(client_number=slug),
-        widget=forms.Select(attrs={"class": "form-control"}),
-        disabled=True,
-    )
-    SubscriptionForm.base_fields["series"] = forms.ModelChoiceField(
-        Series.objects.all(), widget=forms.Select(attrs={"class": "form-control"})
-    )
     if request.method == "POST":
+        form_data = request.POST.copy()
+        form_data["client"] = Client.objects.get(client_number=slug).id
+        print(form_data)
         form = SubscriptionForm(
-            request.POST
+            form_data
         )  # Here maybe look into "instances" https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/#the-save-method
         if form.is_valid():
             form.save()
@@ -49,6 +43,15 @@ def add_subscription(request, slug):
 
             return HttpResponseRedirect(reverse("client"))
     else:
+
+        SubscriptionForm.base_fields["client"] = forms.ModelChoiceField(
+            Client.objects.filter(client_number=slug),
+            widget=forms.Select(attrs={"class": "form-control"}),
+            disabled=True,
+        )
+        SubscriptionForm.base_fields["series"] = forms.ModelChoiceField(
+            Series.objects.all(), widget=forms.Select(attrs={"class": "form-control"})
+        )
         form = SubscriptionForm(
             initial={
                 "client": Client.objects.get(client_number=slug),

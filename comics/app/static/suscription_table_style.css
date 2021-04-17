@@ -5,20 +5,22 @@
     /*max-width: 900px; /* or 950px */
   }
 
-div.container2 {
-  max-width: 5000px;
+.container2 {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 100%;
+  padding: 20px 200px 0px 200px;
 }
 
 a.button{
-  display:inline-block;
   border: 2px solid #484b48;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
   margin-top: 20px;
-  margin-inline-start: 200px;
+  /*margin-inline-start: 200px;
   margin-inline-end: 390px;
   writing-mode: horizontal-tb;
-  direction: ltr;
+  direction: ltr;*/
 }

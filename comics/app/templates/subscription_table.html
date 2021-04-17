@@ -12,14 +12,12 @@
 
 <body>
     <div class="container2">
-        <div class="buttons">
-            <a href="{% url 'addsubscription' slug_field %}" class="button btn btn-primary">Add a new suscription</a>
-            <a href="{% url 'client' %}" class="button btn btn-primary">Back to Client list</a>
-        </div>
+        <a href="{% url 'addsubscription' slug_field %}" class="button btn btn-primary">Add a new suscription</a>
+        <a href="{% url 'client' %}" class="button btn btn-primary">Back to Client list</a>
     </div>
     <div class="container">
         <h2>Suscription Table</h2>
-        <p>This table shows to which series is the client suscribed</p>
+        <p>This table shows to which series is the client subscribed</p>
         <div class="table-responsive">
             <table class="table">
                 <thead>

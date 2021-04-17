@@ -2,11 +2,17 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from app.data_processing import get_df_marvel, visualize_comics
 from app.models import Client, Comic, Series, Suscription
+from app.graph_data import create_graph_data
 import pandas as pd
 from django import forms
 from app.addforms import ClientForm, SubscriptionForm
 from django.urls import reverse
 import datetime
+
+
+def graphsite(request):
+    context = create_graph_data()
+    return render(request, "graph_test.html", context)
 
 
 def index(request):

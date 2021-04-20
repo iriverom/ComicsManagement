@@ -8,15 +8,32 @@ def create_graph_data():
         "stars": [135850, 52122, 148825, 16939, 9763],
     }
 
-    series_count = Series.objects.annotate(num_subs=Count("suscription"))
+    return context
+
+
+def count_data(model, model_name):
+    data_count = model.objects.annotate(num_subs=Count("suscription"))
     data = {}
-    for series in series_count:
-        if series.num_subs != 0:
-            data[str(series)] = series.num_subs
+    for element in data_count:
+        if element.num_subs != 0:
+            data[str(element)] = element.num_subs
     context = {
-        "labels_series_counts": list(data.keys())[:9],
-        "data_series_counts": list(data.values())[:9],
+        f"labels_{model_name}_counts": list(data.keys())[:9],
+        f"data_{model_name}_counts": list(data.values())[:9],
     }
     return context
 
-    # from app.graph_data import create_graph_data()
+
+def client_subscription_classification():
+    data = count_data(Client, "client")
+    value_set = list(set(data["data_client_counts"]))
+    data_dict = {}
+    for element in value_set:
+        data_dict[f"customers with {str(element)} subscriptions"] = data[
+            "data_client_counts"
+        ].count(element)
+    context = {
+        "labels_client_counts": list(data_dict.keys())[:9],
+        "data_client_counts": list(data_dict.values())[:9],
+    }
+    return context

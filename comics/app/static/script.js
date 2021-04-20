@@ -40,10 +40,10 @@ var myBarChart = new Chart(ctxbar, {
 var myPieChart = new Chart(ctxpie, {
     type: 'pie',
     data: {
-        labels: JSON.parse(document.getElementById('labels_series_counts').textContent),/*frameworks,*/
+        labels: JSON.parse(document.getElementById('labels_client_counts').textContent),/*frameworks,*/
         datasets: [{
             /*label: 'Popular Javascript Frameworks',*/
-            data: JSON.parse(document.getElementById('data_series_counts').textContent),/*stars,*/
+            data: JSON.parse(document.getElementById('data_client_counts').textContent),/*stars,*/
             backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",

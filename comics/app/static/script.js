@@ -1,10 +1,10 @@
-var ctxbar = document.getElementById('myBarChart');
-var ctxpie = document.getElementById('myPieChart');
+var ctxbarseries = document.getElementById('SeriesBarChart');
+var ctxbarclient = document.getElementById('ClientBarChart');
 
 /*var stars = [135850, 52122, 148825, 16939, 9763];*/
 var frameworks = ['React', 'Angular', 'Vue', 'Hyperapp', 'Omi'];
 var stars = [135850, 52122, 148825, 16939, 9763];
-var myBarChart = new Chart(ctxbar, {
+var SeriesBarChart = new Chart(ctxbarseries, {
     type: 'bar',
     data: {
         labels: JSON.parse(document.getElementById('labels_series_counts').textContent),
@@ -37,8 +37,8 @@ var myBarChart = new Chart(ctxbar, {
 }
 );
 
-var myPieChart = new Chart(ctxpie, {
-    type: 'pie',
+var ClientBarChart = new Chart(ctxbarclient, {
+    type: 'bar',
     data: {
         labels: JSON.parse(document.getElementById('labels_client_counts').textContent),/*frameworks,*/
         datasets: [{

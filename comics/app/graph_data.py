@@ -24,7 +24,7 @@ def count_data(model, model_name):
     return context
 
 
-def client_subscription_classification():
+def _client_subscription_classification():
     data = count_data(Client, "client")
     value_set = list(set(data["data_client_counts"]))
     data_dict = {}

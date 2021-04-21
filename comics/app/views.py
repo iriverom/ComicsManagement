@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from app.data_processing import get_df_marvel, visualize_comics
 from app.models import Client, Comic, Series, Suscription
-from app.graph_data import count_data, client_subscription_classification
+from app.graph_data import count_data, _client_subscription_classification
 import pandas as pd
 from django import forms
 from app.addforms import ClientForm, SubscriptionForm
@@ -12,15 +12,16 @@ import datetime
 
 def graphsite(request):
     x = count_data(Series, "series")
-    y = client_subscription_classification()
+    y = _client_subscription_classification()
     context = {**x, **y}
     return render(request, "graph_test.html", context)
 
 
 def index(request):
-    df = visualize_comics()
-    df = df.to_html()
-    return HttpResponse(df)
+    # df = visualize_comics()
+    # df = df.to_html()
+    # return HttpResponse(df)
+    return render(request, "login.html")
 
 
 def add_client(request):

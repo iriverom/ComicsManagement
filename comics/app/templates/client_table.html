@@ -4,16 +4,14 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'client_table_style.css' %}">
 </head>
 
 <body>
-    <div>
-        <a href="{% url 'addclient' %}" class="button btn btn-primary">Add/Edit Client</a>
-    </div>
+    {% include 'navbar.html' %}
     <div class="container">
         <h2>Client list</h2>
         <div class="table-responsive">

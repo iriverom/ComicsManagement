@@ -1,0 +1,28 @@
+
+
+.wrapperbar {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.wrapperpie {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+.column h3 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

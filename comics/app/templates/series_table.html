@@ -7,36 +7,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/subscription_table_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/client_table_style.css' %}">
 </head>
 
 <body>
     {% include 'navbar.html' %}
-    <div class="container2">
-        <a href="{% url 'addsubscription' slug_field %}" class="button btn btn-primary">Add a new subscription</a>
-    </div>
-
     <div class="container">
-        <h2>Subscription Table</h2>
-        <p>This table shows to which series is the client subscribed</p>
+        <h2>Series list</h2>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Client Number</th>
+                        <th>Publisher</th>
                         <th>Name</th>
-                        <th>Series</th>
-                        <th>Begin Date</th>
-                        <th>End Date</th>
+                        <th>Volume</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for line in subscription_list %}
+                    {% for line in series_list %}
                     <tr>
-                        <td>{{ line.client.client_number }}</td>
-                        <td>{{ line.client.first_name }} {{ line.client.last_name }}</td>
-                        <td>{{ line.begin_date }}</td>
-                        <td>{{ line.end_date }}</td>
+                        <td>{{ line.publisher}} </td>
+
+                        <td>
+                            <a href="{% url 'subscription_series' line.name_underscore %}">
+                                <div style="height:100%;width:100%">
+                                    {{ line.name }}
+                                </div>
+                            </a>
+                        </td>
+                        <td>{{ line.volume }}</td>
                     </tr>
                     {% endfor %}
                     </tr>

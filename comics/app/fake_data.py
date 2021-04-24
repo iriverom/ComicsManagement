@@ -1,15 +1,14 @@
 from faker import Faker
-import pandas as pd
-from app.models import Client, Series, Comic, Suscription
+from app.models import Client, Series, Comic, Subscription
+from datetime import date
 
 fake = Faker("de_DE")
-# data = []
 
 
 def create_fake_clients():
-    for i in range(49):
+    for i in range(1, 100):
         c = Client.objects.get_or_create(
-            client_number=fake.pyint(min_value=100, max_value=999),
+            client_number=i,
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             birthdate=fake.date_of_birth(minimum_age=18, maximum_age=75).strftime(
@@ -19,3 +18,24 @@ def create_fake_clients():
             address=fake.street_address() + fake.city_with_postcode(),
             email_address=fake.ascii_safe_email(),
         )
+
+
+def create_fake_subscriptions():
+    for client in Client.objects.all():
+        for i in range(fake.pyint(min_value=0, max_value=12)):
+            begin_date = fake.date_time_between_dates(
+                client.registration_date, date.today()
+            )
+            end_date = fake.date_time_between_dates(begin_date, date.today()).strftime(
+                "%Y-%m-%d"
+            )
+            begin_date = begin_date.strftime("%Y-%m-%d")
+            s = Subscription.objects.get_or_create(
+                client=client,
+                series=Series.objects.get(
+                    pk=fake.pyint(min_value=1, max_value=Series.objects.all().count())
+                ),
+                begin_date=begin_date,
+                end_date=end_date,
+            )
+            # create a way to not have end_date

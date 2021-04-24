@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from app.models import Client, Suscription
+from app.models import Client, Subscription
 
 
 class NameForm(forms.Form):
@@ -32,13 +32,14 @@ class ClientForm(ModelForm):
 
 class SubscriptionForm(ModelForm):
     class Meta:
-        model = Suscription
+        model = Subscription
         fields = [
             "client",
             "series",
             "begin_date",
             "end_date",
         ]
+        # address = forms.CharField(blank=True)
         widgets = {
             "client": forms.TextInput(attrs={"class": "form-control"}),
             "series": forms.TextInput(attrs={"class": "form-control"}),

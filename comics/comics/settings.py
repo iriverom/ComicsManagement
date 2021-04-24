@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "widget_tweaks",
+    "django_extensions",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -120,4 +123,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 LOGIN_REDIRECT_URL = "dashboard"
-LOGOUT_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "login"

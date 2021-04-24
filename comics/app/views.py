@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from app.data_processing import get_df_marvel, visualize_comics
-from app.models import Client, Comic, Series, Suscription
+from app.models import Client, Comic, Series, Subscription
 from app.graph_data import count_data, _client_subscription_classification
 import pandas as pd
 from django import forms
@@ -10,18 +10,18 @@ from django.urls import reverse
 import datetime
 
 
-def graphsite(request):
-    x = count_data(Series, "series")
+def dashboard_site(request):
+    x = count_data(Series, "series", 9)
     y = _client_subscription_classification()
     context = {**x, **y}
-    return render(request, "graph_test.html", context)
+    return render(request, "dashboard.html", context)
 
 
 def index(request):
     # df = visualize_comics()
     # df = df.to_html()
     # return HttpResponse(df)
-    return render(request, "login.html")
+    return render(request, "index.html")
 
 
 def add_client(request):
@@ -68,7 +68,7 @@ def add_subscription(request, slug):
             }
         )
 
-    url_test = "/app/client/<slug:slug>/suscriptionadded"
+    url_test = "/app/client/<slug:slug>/subscriptionadded"
     return render(
         request,
         "add-subscription-form.html",
@@ -85,10 +85,28 @@ def client_index(request):
 def client_subscription(request, slug):
     slug_field = slug  # there's very likely a better way of doing this: https://learndjango.com/tutorials/django-slug-tutorial
     client_id = get_object_or_404(Client, client_number=slug).id
-    subscription_list = Suscription.objects.filter(client=client_id)
+    subscription_list = Subscription.objects.filter(client=client_id)
     context = {
         "slug_field": slug_field,
         "subscription_list": subscription_list,
         "client_id": client_id,
     }
     return render(request, "subscription_table.html", context)
+
+
+def series_index(request):
+    series_list = Series.objects.order_by("publisher")
+    context = {"series_list": series_list}
+    return render(request, "series_table.html", context)
+
+
+def series_subscription(request, slug):
+    slug_field = slug  # there's very likely a better way of doing this: https://learndjango.com/tutorials/django-slug-tutorial
+    series_id = get_object_or_404(Series, name_underscore=slug).id
+    subscription_list = Subscription.objects.filter(series=series_id)
+    context = {
+        "slug_field": slug_field,
+        "subscription_list": subscription_list,
+        "series_id": series_id,
+    }
+    return render(request, "series_subscription.html", context)

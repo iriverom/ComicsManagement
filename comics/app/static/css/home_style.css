@@ -1,0 +1,25 @@
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .column {
+    float: left;
+    width: 50%;
+  }
+  .column img{
+  width: 100%;
+  }
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  #login {
+    font-size:x-large ;     
+    margin: 300px 0px 0px 300px;
+}
+

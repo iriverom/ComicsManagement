@@ -12,20 +12,17 @@
 
 <body>
     {% include 'navbar.html' %}
-    <div class="container2">
-        <a href="{% url 'addsubscription' slug_field %}" class="button btn btn-primary">Add a new subscription</a>
-    </div>
 
     <div class="container">
-        <h2>Subscription Table</h2>
-        <p>This table shows to which series is the client subscribed</p>
+        <h2>Series Subscription Table</h2>
+        <p>This table shows which clients are subscribed to a particular series</p>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Client Number</th>
-                        <th>Name</th>
-                        <th>Series</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Begin Date</th>
                         <th>End Date</th>
                     </tr>
@@ -35,6 +32,7 @@
                     <tr>
                         <td>{{ line.client.client_number }}</td>
                         <td>{{ line.client.first_name }} {{ line.client.last_name }}</td>
+                        <td>{{ line.series }}</td>
                         <td>{{ line.begin_date }}</td>
                         <td>{{ line.end_date }}</td>
                     </tr>

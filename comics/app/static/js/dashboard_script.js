@@ -1,9 +1,6 @@
 var ctxbarseries = document.getElementById('SeriesBarChart');
 var ctxbarclient = document.getElementById('ClientBarChart');
 
-/*var stars = [135850, 52122, 148825, 16939, 9763];*/
-var frameworks = ['React', 'Angular', 'Vue', 'Hyperapp', 'Omi'];
-var stars = [135850, 52122, 148825, 16939, 9763];
 var SeriesBarChart = new Chart(ctxbarseries, {
     type: 'bar',
     data: {
@@ -26,7 +23,7 @@ var SeriesBarChart = new Chart(ctxbarseries, {
                 "rgba(153, 102, 255, 1)",
             ],
             borderWidth: 1,
-            barThickness: 50,
+            barThickness: 20,
         }]
     },
     options: {
@@ -42,7 +39,7 @@ var ClientBarChart = new Chart(ctxbarclient, {
     data: {
         labels: JSON.parse(document.getElementById('labels_client_counts').textContent),/*frameworks,*/
         datasets: [{
-            /*label: 'Popular Javascript Frameworks',*/
+            label: 'Number of clients',
             data: JSON.parse(document.getElementById('data_client_counts').textContent),/*stars,*/
             backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
@@ -61,10 +58,15 @@ var ClientBarChart = new Chart(ctxbarclient, {
             borderWidth: 1,
         }]
     },
-    /*options: {
-        maintainAspectRatio: false,
-        responsive: false
-    }*/
+    options: {
+        plugins: {
+            legend: {
+                display: false,
+            }
+        }
+        /*maintainAspectRatio: false,
+        responsive: false*/
+    }
 }
 )
 

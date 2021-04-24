@@ -31,7 +31,12 @@ class Client(models.Model):
 class Series(models.Model):
     publisher = models.CharField(max_length=30)
     name = models.CharField(max_length=60)
+    name_underscore = models.CharField(max_length=60)
     volume = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    slug = models.SlugField()
+
+    def slug(self):
+        return slugify(self.client_number)
 
     # objects = SeriesManager()
 
@@ -59,7 +64,7 @@ class Comic(models.Model):
 # co = Comic(series = Series.objects.get(publisher = "Marvel", name = "X-Men", volume = 1), issue = 1, pub_date = "2021-03-03")
 
 
-class Suscription(models.Model):
+class Subscription(models.Model):
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
@@ -70,7 +75,7 @@ class Suscription(models.Model):
         return str(self.client) + " " + str(self.series)
 
 
-# su = Suscription(series = Series.objects.get(publisher = "Marvel", name = "X-Men", volume = 1),
+# su = Subscription(series = Series.objects.get(publisher = "Marvel", name = "X-Men", volume = 1),
 #   client = Client.objects.get(client_number="548"), begin_date = "2021-02-01", end_date= "2021-03-03")
 
 

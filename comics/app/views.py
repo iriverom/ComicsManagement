@@ -102,11 +102,13 @@ def series_index(request):
 
 def series_subscription(request, slug):
     slug_field = slug  # there's very likely a better way of doing this: https://learndjango.com/tutorials/django-slug-tutorial
-    series_id = get_object_or_404(Series, name_underscore=slug).id
+    series_id = get_object_or_404(Series, id=slug).id
+    series_name = get_object_or_404(Series, id=slug).name
     subscription_list = Subscription.objects.filter(series=series_id)
     context = {
         "slug_field": slug_field,
         "subscription_list": subscription_list,
         "series_id": series_id,
+        "series_name": series_name,
     }
-    return render(request, "series_subscription.html", context)
+    return render(request, "series_subscription_table.html", context)

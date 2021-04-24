@@ -35,16 +35,11 @@ class Series(models.Model):
     volume = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     slug = models.SlugField()
 
-    def slug(self):
-        return slugify(self.client_number)
-
-    # objects = SeriesManager()
-
-    # class Meta:
-    #    unique_together = [["name", "volume"]]
-
     def __str__(self):
         return self.name + " Volume " + str(self.volume)
+
+    def slug(self):
+        return slugify(self.id)
 
 
 # s = Series(publisher = "DC", name = "Batman", volume = 3)

@@ -31,7 +31,7 @@
                     {% for line in latest_client_list %}
                     <tr>
                         <td>
-                            <a href="{% url 'subscription' line.client_number %}">
+                            <a href="{% url 'client_subscription' line.client_number %}">
                                 <div style="height:100%;width:100%">
                                     {{ line.client_number }}
                                 </div>

@@ -75,13 +75,14 @@ def adding_comics():
         ):  # this way all TPBs and HC are thrown out, a more elegant way should be implemented
             issue_number = df["Issue"].iloc[i]
             comic_name = df["Name"].iloc[i]
-            # comic_name_underscore = df["Name2"].iloc[i]
+            comic_name_underscore = df["Name2"].iloc[i]
             publisher = df["Publisher"].iloc[i].capitalize()
             release_date = df["Release Date"].iloc[i]
             s, created = Series.objects.get_or_create(
                 publisher=publisher,
                 name=comic_name,
-                volume=1,  # name_underscore=comic_name_underscore
+                volume=1,
+                name_underscore=comic_name_underscore,
             )
             c = Comic.objects.get_or_create(
                 series=s, issue=issue_number, pub_date=release_date

@@ -1,5 +1,7 @@
 import pandas as pd
 from app.models import Client, Series, Comic, Subscription
+from django.db.models import Count
+from datetime import date
 
 
 def get_df_from_txt():
@@ -69,24 +71,25 @@ def get_df_marvel():
 
 def adding_comics():
     df = get_df_from_txt()
+    df = df[df["Price"].notnull()]
+    df = df[df["Issue"].notnull()]
     for i in range(len(df.index)):
-        if (
-            df["Issue"].iloc[i] != None
-        ):  # this way all TPBs and HC are thrown out, a more elegant way should be implemented
-            issue_number = df["Issue"].iloc[i]
-            comic_name = df["Name"].iloc[i]
-            comic_name_underscore = df["Name2"].iloc[i]
-            publisher = df["Publisher"].iloc[i].capitalize()
-            release_date = df["Release Date"].iloc[i]
-            s, created = Series.objects.get_or_create(
-                publisher=publisher,
-                name=comic_name,
-                volume=1,
-                name_underscore=comic_name_underscore,
-            )
-            c = Comic.objects.get_or_create(
-                series=s, issue=issue_number, pub_date=release_date
-            )
+        # this way all TPBs and HC are thrown out, a more elegant way should be implemented
+        issue_number = df["Issue"].iloc[i]
+        comic_name = df["Name"].iloc[i]
+        comic_name_underscore = df["Name2"].iloc[i]
+        price = df["Price"].iloc[i]
+        publisher = df["Publisher"].iloc[i].capitalize()
+        release_date = df["Release Date"].iloc[i]
+        s, created = Series.objects.get_or_create(
+            publisher=publisher,
+            name=comic_name,
+            volume=1,
+            name_underscore=comic_name_underscore,
+        )
+        c = Comic.objects.get_or_create(
+            series=s, issue=issue_number, pub_date=release_date, price=price
+        )
 
 
 # importing of HC and TPB not implemented
@@ -101,3 +104,27 @@ def visualize_comics():
     df = df.drop("series_id", axis=1)  # inplace = True
     df["series_name"] = pd.Series(new_id_column).values
     return df
+
+
+def create_excel_order_monthly():
+    data_count = Series.objects.annotate(num_subs=Count("subscription"))
+    comic_data = []
+    for series in data_count:
+        if series.num_subs != 0:  # and end_date == null
+            comicqueryset = Comic.objects.filter(
+                series=series.id, pub_date__month=date.today().month - 1
+            )
+            for element in comicqueryset:
+                issue_data = [
+                    series.name,
+                    element.issue,
+                    element.pub_date.strftime("%Y-%m-%d"),
+                    element.price,
+                    series.num_subs,
+                    element.price * series.num_subs,
+                ]
+                comic_data.append(issue_data)
+    my_cols = ["Series Name", "Issue", "Release Date", "Price", "Amount", "Total price"]
+    df = pd.DataFrame(comic_data, columns=my_cols)
+    return df
+    # next step would be export to excel with a pop up download

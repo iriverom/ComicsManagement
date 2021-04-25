@@ -1,6 +1,7 @@
 from faker import Faker
 from app.models import Client, Series, Comic, Subscription
 from datetime import date
+import random
 
 fake = Faker("de_DE")
 
@@ -29,6 +30,8 @@ def create_fake_subscriptions():
             end_date = fake.date_time_between_dates(begin_date, date.today()).strftime(
                 "%Y-%m-%d"
             )
+            if random.choices([True, False], weights=[1, 10]):
+                end_date = None
             begin_date = begin_date.strftime("%Y-%m-%d")
             s = Subscription.objects.get_or_create(
                 client=client,

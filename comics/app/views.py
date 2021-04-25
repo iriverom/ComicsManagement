@@ -1,13 +1,20 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from app.data_processing import get_df_marvel, visualize_comics
+from app.data_processing import (
+    get_df_marvel,
+    visualize_comics,
+    create_excel_order_monthly,
+)
 from app.models import Client, Comic, Series, Subscription
 from app.graph_data import count_data, _client_subscription_classification
 import pandas as pd
 from django import forms
 from app.addforms import ClientForm, SubscriptionForm
 from django.urls import reverse
+from django.db.models import Q
 import datetime
+from datetime import date
+from io import BytesIO
 
 
 def dashboard_site(request):
@@ -15,6 +22,28 @@ def dashboard_site(request):
     y = _client_subscription_classification()
     context = {**x, **y}
     return render(request, "dashboard.html", context)
+
+
+def some_view(request):
+    df = create_excel_order_monthly()
+    with BytesIO() as b:
+        writer = pd.ExcelWriter(b, engine="xlsxwriter")
+        excelname = (
+            "Order_Form_"
+            + date.today().strftime("%m")
+            + "_"
+            + str(date.today().year)
+            + ".xlsx"
+        )
+        df.to_excel(writer, sheet_name=excelname, index=False)
+        writer.save()
+        filename = excelname + ".xlsx"
+        response = HttpResponse(
+            b.getvalue(),
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+        response["Content-Disposition"] = "attachment; filename=%s" % filename
+        return response
 
 
 def index(request):
@@ -98,6 +127,24 @@ def series_index(request):
     series_list = Series.objects.order_by("publisher")
     context = {"series_list": series_list}
     return render(request, "series_table.html", context)
+
+
+def search_view(request):
+
+    search_req = request.GET.get("search")
+    if search_req:
+        series_list = Series.objects.filter(Q(name__icontains=search_req))
+        client_list = Client.objects.filter(Q(client_number__icontains=search_req))
+    if series_list:
+        context = {"series_list": series_list}
+        template = "series_table.html"
+    elif client_list:
+        context = {"latest_client_list": client_list}
+        template = "client_table.html"
+    else:
+        template = "404.html"
+        context = {}
+    return render(request, template, context)
 
 
 def series_subscription(request, slug):

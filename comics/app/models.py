@@ -49,6 +49,7 @@ class Comic(models.Model):
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
     issue = models.IntegerField()
     pub_date = models.DateField()
+    price = models.FloatField()
     writer = models.CharField(max_length=60, blank=True)
     penciller = models.CharField(max_length=60, blank=True)
 
@@ -64,7 +65,7 @@ class Subscription(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
     begin_date = models.DateField()
-    end_date = models.DateField(blank=True)
+    end_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return str(self.client) + " " + str(self.series)

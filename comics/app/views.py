@@ -15,6 +15,8 @@ from django.db.models import Q
 import datetime
 from datetime import date
 from io import BytesIO
+from django.views.generic.edit import DeleteView
+from django.shortcuts import redirect
 
 
 def dashboard_site(request):
@@ -103,6 +105,18 @@ def add_subscription(request, slug):
         "add-subscription-form.html",
         {"form": form, "slug": slug, "url_test": url_test},
     )
+
+
+class remove_client(DeleteView):
+    model = Client
+    success_url = "app/dashboard"
+
+
+def approve_group(request, pk):
+    sub = Subscription.objects.get(pk=pk)
+    sub.end_date = date.today()
+    sub.save()
+    return HttpResponseRedirect(reverse("client"))
 
 
 def client_index(request):

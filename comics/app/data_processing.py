@@ -1,6 +1,6 @@
 import pandas as pd
 from app.models import Client, Series, Comic, Subscription
-from django.db.models import Count
+from django.db.models import Count, Q
 from datetime import date
 
 
@@ -107,15 +107,18 @@ def visualize_comics():
 
 
 def create_excel_order_monthly():
-    data_count = Series.objects.annotate(num_subs=Count("subscription"))
+    data_count = Series.objects.annotate(
+        num_subs=Count("subscription", filter=Q(subscription__end_date__isnull=True))
+    )
     comic_data = []
     for series in data_count:
-        if series.num_subs != 0:  # and end_date == null
+        if series.num_subs != 0:
             comicqueryset = Comic.objects.filter(
                 series=series.id, pub_date__month=date.today().month - 1
             )
             for element in comicqueryset:
                 issue_data = [
+                    series.publisher,
                     series.name,
                     element.issue,
                     element.pub_date.strftime("%Y-%m-%d"),
@@ -124,7 +127,14 @@ def create_excel_order_monthly():
                     element.price * series.num_subs,
                 ]
                 comic_data.append(issue_data)
-    my_cols = ["Series Name", "Issue", "Release Date", "Price", "Amount", "Total price"]
+    my_cols = [
+        "Publisher",
+        "Series Name",
+        "Issue",
+        "Release Date",
+        "Price",
+        "Amount",
+        "Total price",
+    ]
     df = pd.DataFrame(comic_data, columns=my_cols)
     return df
-    # next step would be export to excel with a pop up download

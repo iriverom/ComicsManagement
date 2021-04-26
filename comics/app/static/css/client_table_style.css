@@ -1,4 +1,7 @@
-.container {
+#footer{
+  position:relative;
+}
+.container .table-responsive{
     margin-right: auto;
     margin-left: auto;
     margin-top: 0px;

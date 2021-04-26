@@ -1,8 +1,17 @@
-.container {
+#approve-btn{
+  display: inline-block;
+  width: 100%;
+  text-align:center;
+}
+
+#footer{
+  position: relative;
+}
+.container .table-responsive {
     margin-right: auto;
     margin-left: auto;
     margin-top: 0px;
-    /*max-width: 900px; /* or 950px */
+    /*max-width: 1000px; /* or 950px */
   }
 
 .container2 {

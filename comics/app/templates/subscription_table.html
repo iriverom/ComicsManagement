@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/subscription_table_style.css' %}">
 </head>
 
@@ -17,17 +20,18 @@
     </div>
 
     <div class="container">
-        <h2>Subscription Table</h2>
+        <h2>Subscription Table for Client Number {{client_id}} </h2>
         <p>This table shows to which series is the client subscribed</p>
-        <div class="table-responsive">
+        <div class="table-responsive w-100">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Client Number</th>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Series</th>
                         <th>Begin Date</th>
                         <th>End Date</th>
+                        <th>Cancel Sub?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +41,14 @@
                         <td>{{ line.client.first_name }} {{ line.client.last_name }}</td>
                         <td>{{ line.series }}</td>
                         <td>{{ line.begin_date }}</td>
-                        <td>{{ line.end_date }}</td>
+                        <td>{{ line.end_date|default_if_none:'' }}</td>
+                        <td>
+                            <form action="{% url 'change_status' pk=line.id %}" method=POST>
+                                {% csrf_token %}
+                                <button id="approve-btn" type="submit" class="btn"><i
+                                        class="fas fa-times-circle"></i></button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tr>
@@ -47,5 +58,6 @@
     </div>
 
 </body>
+
 
 </html>

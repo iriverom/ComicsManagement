@@ -8,16 +8,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/404_style.css' %}">
 </head>
 
-<body>
+<body style="background-color: #95c2de" ;>
+    {% include 'navbar.html' %}
     <div class="mainbox">
         <div class="err">4</div>
         <i class="far fa-question-circle fa-spin"></i>
         <div class="err2">4</div>
-        <div class="msg">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first
-            place?<p>Let's go <a href="#">home</a> and try from there.</p>
+        <div class="msg">Hmmm, we couldn't find what you were looking for.
+            <p>Maybe you would like to go back to the <a href="{% url 'series' %}">Series Table</a>?</p>
         </div>
     </div>
 
 </body>
+{% include 'footer.html' %}
 
 </html>

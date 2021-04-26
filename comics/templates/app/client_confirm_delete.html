@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    {% include 'navbar.html' %}
+    <div class="container-fluid">
+
+        <div class="form-group">
+
+            <form method="post">{% csrf_token %}
+                <p>Are you really that sure you want to delete the client "{{ object }}"?</p>
+                <p>If you delete a client, all data including past Subscriptions will be removed from the database.</p>
+                <input type="submit" value="Confirm" class="button btn btn-danger">
+            </form>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+
+</html>

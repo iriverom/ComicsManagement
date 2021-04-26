@@ -5,9 +5,7 @@ from datetime import date
 
 
 def get_df_from_txt():
-    with open(
-        r"/mnt/d/DataAnalysis/JAN21_COF.txt", "r", encoding="unicode_escape"
-    ) as f:
+    with open(r"static/files/JAN21_COF.txt", "r", encoding="unicode_escape") as f:
         mylist = f.read().splitlines()
 
     comic_list = []

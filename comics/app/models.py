@@ -23,11 +23,6 @@ class Client(models.Model):
 # c = Client(client_number = 548, first_name = "Ivan", last_name = "Rivero", birthdate = "05.08.1986", registration_date = "23.03.2021", email_address = "test@gmail.com")
 
 
-# class SeriesManager(models.Manager):
-#    def get_by_natural_key(self, name, volume):
-#        return self.get(name=name, volume=volume)
-
-
 class Series(models.Model):
     publisher = models.CharField(max_length=30)
     name = models.CharField(max_length=60)

@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from app.data_processing import (
     get_df_marvel,
-    visualize_comics,
     create_excel_order_monthly,
 )
 from app.models import Client, Comic, Series, Subscription
@@ -46,13 +45,6 @@ def create_excel(request):
         )
         response["Content-Disposition"] = "attachment; filename=%s" % filename
         return response
-
-
-def index(request):
-    # df = visualize_comics()
-    # df = df.to_html()
-    # return HttpResponse(df)
-    return render(request, "index.html")
 
 
 def add_client(request):

@@ -51,27 +51,6 @@ def get_df_from_txt():
     return df
 
 
-def get_df_marvel():
-    my_cols = ["Page", "Code", "Name", "Release Date", "Price", "Currency"]
-    df = pd.read_csv(r"/mnt/d/DataAnalysis/Marvel_January_21.csv", names=my_cols)
-
-    df = df[df["Code"].notnull()]  # filtering all not null lines
-
-    df[["Name", "Description"]] = df["Name"].str.split(
-        "#",
-        expand=True,
-    )
-    df["Number"] = df["Description"].str.split(" ").str[0]
-    df["Price"] = df["Price"].str.split("$").str[1]
-    df["Description"] = df["Description"].str.split(" ").str[1:]
-    df["Release Date"] = pd.to_datetime(df["Release Date"])
-    df = df.drop(["Page", "Currency"], 1)
-    return df
-
-
-# from app.data_processing import adding_comics
-
-
 def adding_comics():
     df = get_df_from_txt()
     df = df[df["Price"].notnull()]
@@ -96,17 +75,6 @@ def adding_comics():
 
 
 # importing of HC and TPB not implemented
-
-
-def visualize_comics():
-    df = pd.DataFrame(list(Comic.objects.all().values()))
-    series_id_column = df["series_id"]
-    new_id_column = []
-    for i in range(len(series_id_column)):
-        new_id_column.append(Series.objects.get(pk=series_id_column[i]).name)
-    df = df.drop("series_id", axis=1)  # inplace = True
-    df["series_name"] = pd.Series(new_id_column).values
-    return df
 
 
 def create_excel_order_monthly():

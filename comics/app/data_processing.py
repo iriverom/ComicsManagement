@@ -2,11 +2,16 @@ import pandas as pd
 from app.models import Client, Series, Comic, Subscription
 from django.db.models import Count, Q
 from datetime import date
+import urllib.request
 
 
 def get_df_from_txt():
-    with open(r"static/files/JAN21_COF.txt", "r", encoding="unicode_escape") as f:
-        mylist = f.read().splitlines()
+    """with open(
+        r"/mnt/d/DataAnalysis/JAN21_COF.txt", "r", encoding="unicode_escape"
+    ) as f:"""
+    url = "https://www.previewsworld.com/Catalog/CustomerOrderForm/TXT/JAN21"
+    f = urllib.request.urlopen(url)
+    mylist = f.read().decode("windows-1252").splitlines()
 
     comic_list = []
     for element in mylist:

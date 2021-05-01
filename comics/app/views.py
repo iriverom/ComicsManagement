@@ -26,7 +26,7 @@ def dashboard_site(request):
     return render(request, "dashboard.html", context)
 
 
-def some_view(request):
+def create_excel(request):
     df = create_excel_order_monthly()
     with BytesIO() as b:
         writer = pd.ExcelWriter(b, engine="xlsxwriter")

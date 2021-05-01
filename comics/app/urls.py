@@ -8,7 +8,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     # path("accounts/", include("django.contrib.auth.urls")),  # new
     path("index/", views.index, name="index"),
-    path("excel/", views.some_view, name="excel"),
+    path("excel/", views.create_excel, name="excel"),
     path("search/", views.search_view, name="search_view"),
     path("graph/", views.dashboard_site, name="dashboard"),
     path("client/", views.client_index, name="client"),

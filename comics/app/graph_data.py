@@ -2,15 +2,6 @@ from app.models import Client, Series, Subscription, Comic
 from django.db.models import Count
 
 
-def create_graph_data():
-    context = {
-        "test": "Popular Javascript Frameworks",
-        "stars": [135850, 52122, 148825, 16939, 9763],
-    }
-
-    return context
-
-
 def count_data(model, model_name, top):
     data_count = model.objects.annotate(num_subs=Count("subscription"))
     data = {}

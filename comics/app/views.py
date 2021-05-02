@@ -51,7 +51,6 @@ def add_client(request):
         )  # Here maybe look into "instances" https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/#the-save-method
         if form.is_valid():
             form.save()
-            print(request.POST)
             return HttpResponseRedirect(reverse("client"))
     else:
         form = ClientForm()
@@ -62,21 +61,17 @@ def add_subscription(request, slug):
     if request.method == "POST":
         form_data = request.POST.copy()
         form_data["client"] = Client.objects.get(client_number=slug).id
-        print(form_data)
         form = SubscriptionForm(
             form_data
         )  # Here maybe look into "instances" https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/#the-save-method
         if form.is_valid():
             form.save()
-            print(request.POST)
-
             return HttpResponseRedirect(reverse("client"))
     else:
-
         SubscriptionForm.base_fields["client"] = forms.ModelChoiceField(
             Client.objects.filter(client_number=slug),
             widget=forms.Select(attrs={"class": "form-control"}),
-            disabled=False,  # Try to make it true!!!!!!!!!!
+            disabled=False,
         )
         SubscriptionForm.base_fields["series"] = forms.ModelChoiceField(
             Series.objects.all(), widget=forms.Select(attrs={"class": "form-control"})
@@ -87,11 +82,11 @@ def add_subscription(request, slug):
                 "begin_date": datetime.datetime.now(),
             }
         )
-    url_test = "/app/client/<slug:slug>/subscriptionadded"
+    url = "/app/client/<slug:slug>/subscriptionadded"
     return render(
         request,
         "add-subscription-form.html",
-        {"form": form, "slug": slug, "url_test": url_test},
+        {"form": form, "slug": slug, "url_test": url},
     )
 
 
@@ -105,7 +100,6 @@ def end_subscription(request, pk):
     sub.end_date = date.today()
     sub.save()
     return HttpResponseRedirect(reverse("client"))
-    # reverse("client", kwargs={'pk': self.pk, 'slug': self.slug })
 
 
 def client_index(request):
@@ -133,7 +127,6 @@ def series_index(request):
 
 
 def search_view(request):
-
     search_req = request.GET.get("search")
     if search_req:
         series_list = Series.objects.filter(Q(name__icontains=search_req))

@@ -5,25 +5,25 @@ from datetime import date
 import urllib.request
 
 
-def get_df_from_txt():
-    """with open(
-        r"/mnt/d/DataAnalysis/JAN21_COF.txt", "r", encoding="unicode_escape"
-    ) as f:"""
+def process_previews_file():
+    """
+    Downloads the comics previews file and parses it.
+    """
     url = "https://www.previewsworld.com/Catalog/CustomerOrderForm/TXT/JAN21"
     f = urllib.request.urlopen(url)
-    mylist = f.read().decode("windows-1252").splitlines()
+    lines = f.read().decode("windows-1252").splitlines()
 
     comic_list = []
-    for element in mylist:
-        if not (element[0:4] == "PAGE" or element.count("#") > 1):
-            if element[-2:-1] == "$":
-                comic_split = element.split("\t")
+    for line in lines:
+        if not (line[0:4] == "PAGE" or line.count("#") > 1):
+            if line[-2:-1] == "$":
+                comic_split = line.split("\t")
                 comic_split.append(publisher)
                 comic_list.append(comic_split)
             else:
-                publisher = element.split("\t")[0]
+                publisher = line.split("\t")[0]
 
-    my_cols = [
+    cols = [
         "Weird",
         "Code",
         "Name",
@@ -33,7 +33,7 @@ def get_df_from_txt():
         "Empty",
         "Publisher",
     ]
-    df = pd.DataFrame(comic_list, columns=my_cols)
+    df = pd.DataFrame(comic_list, columns=cols)
 
     df = df[df["Code"].notnull()]
     df[["Name", "Description"]] = df["Name"].str.split(
@@ -46,14 +46,15 @@ def get_df_from_txt():
 
     df["Description"] = df["Description"].str.split(" ").str[1:]
     df["Name"] = df["Name"].str.strip()
-    # df["Name2"] = df["Name"].replace(" ", "_", regex=True)
-    # df["Release Date"] = pd.to_date(df["Release Date"])
     df["Release Date"] = pd.to_datetime(df["Release Date"]).dt.date
     return df
 
 
 def adding_comics():
-    df = get_df_from_txt()
+    """
+    Adds all the new monthly comics to the database
+    """
+    df = process_previews_file()
     df = df[df["Price"].notnull()]
     df = df[df["Issue"].notnull()]
     for i in range(len(df.index)):
@@ -87,18 +88,18 @@ def create_excel_order_monthly():
             comicqueryset = Comic.objects.filter(
                 series=series.id, pub_date__month=date.today().month - 2
             )  # month - 2 is for testing purposes, once the database is properly filled and only give the order form for the actual month
-            for element in comicqueryset:
+            for comic in comicqueryset:
                 issue_data = [
                     series.publisher,
                     series.name,
-                    element.issue,
-                    element.pub_date.strftime("%Y-%m-%d"),
-                    element.price,
+                    comic.issue,
+                    comic.pub_date.strftime("%Y-%m-%d"),
+                    comic.price,
                     series.num_subs,
-                    element.price * series.num_subs,
+                    comic.price * series.num_subs,
                 ]
                 comic_data.append(issue_data)
-    my_cols = [
+    cols = [
         "Publisher",
         "Series Name",
         "Issue",
@@ -107,5 +108,5 @@ def create_excel_order_monthly():
         "Amount",
         "Total price",
     ]
-    df = pd.DataFrame(comic_data, columns=my_cols)
+    df = pd.DataFrame(comic_data, columns=cols)
     return df

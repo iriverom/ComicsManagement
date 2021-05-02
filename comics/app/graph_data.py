@@ -8,14 +8,12 @@ def count_data(model, model_name, top):
     for element in data_count:
         if element.num_subs != 0:
             data[str(element)] = element.num_subs
-    newdata = dict(
-        sorted(data.items(), key=lambda item: item[1])
-    )  # if we don't sort the dict, the data we get in context is not ordered
+    data = dict(sorted(data.items(), key=lambda item: item[1]))
 
     context = {
-        f"labels_{model_name}_counts": list(newdata.keys())[-top:],
-        f"data_{model_name}_counts": list(newdata.values())[-top:],
-    }  # if we want the top 10, a 9 must be given
+        f"labels_{model_name}_counts": list(data.keys())[-top:],
+        f"data_{model_name}_counts": list(data.values())[-top:],
+    }
     return context
 
 
@@ -28,13 +26,9 @@ def _client_subscription_classification():
             "data_client_counts"
         ].count(element)
 
-    newdata = dict(
-        sorted(data_dict.items(), key=lambda item: item[1])
-    )  # if we don't sort the dict, the data we get in context is not ordered
-
     context = {
         "labels_client_counts": list(data_dict.keys())[:9],
         "data_client_counts": list(data_dict.values())[:9],
-    }  # the problem is probably here
+    }
 
     return context

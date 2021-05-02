@@ -1,6 +1,6 @@
 from app.models import Client, Subscription, Series, Comic
 from app.data_processing import (
-    get_df_from_txt,
+    process_previews_file,
     adding_comics,
     create_excel_order_monthly,
 )
@@ -11,9 +11,9 @@ import pytest
 pytestmark = pytest.mark.django_db
 
 
-def test_get_df_from_txt():
+def test_process_previews_file():
     # url = "https://www.previewsworld.com/Catalog/CustomerOrderForm/TXT/JAN21"
-    df = get_df_from_txt()
+    df = process_previews_file()
     assert df["Code"][0] == "JAN21 0001"
     assert df["Name"][0] == "PREVIEWS"
     rel_date = datetime.datetime.strptime("2021-02-24", "%Y-%m-%d").date()

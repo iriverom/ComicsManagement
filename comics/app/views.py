@@ -87,7 +87,6 @@ def add_subscription(request, slug):
                 "begin_date": datetime.datetime.now(),
             }
         )
-
     url_test = "/app/client/<slug:slug>/subscriptionadded"
     return render(
         request,

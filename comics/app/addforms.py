@@ -3,10 +3,6 @@ from django.forms import ModelForm
 from app.models import Client, Subscription
 
 
-class NameForm(forms.Form):
-    your_name = forms.CharField(label="Your name", max_length=100)
-
-
 class ClientForm(ModelForm):
     class Meta:
         model = Client
@@ -39,6 +35,7 @@ class SubscriptionForm(ModelForm):
             "begin_date",
             "end_date",
         ]
+
         # address = forms.CharField(blank=True)
         widgets = {
             "client": forms.TextInput(attrs={"class": "form-control"}),

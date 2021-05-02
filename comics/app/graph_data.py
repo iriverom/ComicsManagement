@@ -24,7 +24,7 @@ def _client_subscription_classification():
     value_set = list(set(data["data_client_counts"]))
     data_dict = {}
     for element in value_set:
-        data_dict[f"customers with {str(element)} subscriptions"] = data[
+        data_dict[f"Customers with {str(element)} subscriptions"] = data[
             "data_client_counts"
         ].count(element)
 

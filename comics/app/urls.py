@@ -2,12 +2,9 @@ from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from . import views
-from .views import remove_client, approve_group
+from .views import remove_client
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    # path("accounts/", include("django.contrib.auth.urls")),  # new
-    path("index/", views.index, name="index"),
     path("excel/", views.create_excel, name="excel"),
     path("search/", views.search_view, name="search_view"),
     path("graph/", views.dashboard_site, name="dashboard"),
@@ -36,7 +33,7 @@ urlpatterns = [
     ),
     path(
         "change/<pk>/",
-        views.approve_group,
-        name="change_status",
+        views.end_subscription,
+        name="end_subscription",
     ),
 ]

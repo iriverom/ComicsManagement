@@ -42,12 +42,13 @@ def get_df_from_txt():
     )
     df["Issue"] = df["Description"].str.split(" ").str[0]
     df["Price"] = df["Price"].str.split("$").str[1]
-    df = df.drop(["Weird", "Currency"], 1)
+    df = df.drop(["Weird", "Currency", "Empty"], 1)
 
     df["Description"] = df["Description"].str.split(" ").str[1:]
     df["Name"] = df["Name"].str.strip()
-    df["Name2"] = df["Name"].replace(" ", "_", regex=True)
-    df["Release Date"] = pd.to_datetime(df["Release Date"])
+    # df["Name2"] = df["Name"].replace(" ", "_", regex=True)
+    # df["Release Date"] = pd.to_date(df["Release Date"])
+    df["Release Date"] = pd.to_datetime(df["Release Date"]).dt.date
     return df
 
 
@@ -59,7 +60,7 @@ def adding_comics():
         # this way all TPBs and HC are thrown out, a more elegant way should be implemented
         issue_number = df["Issue"].iloc[i]
         comic_name = df["Name"].iloc[i]
-        comic_name_underscore = df["Name2"].iloc[i]
+        # comic_name_underscore = df["Name2"].iloc[i]
         price = df["Price"].iloc[i]
         publisher = df["Publisher"].iloc[i].capitalize()
         release_date = df["Release Date"].iloc[i]
@@ -67,7 +68,6 @@ def adding_comics():
             publisher=publisher,
             name=comic_name,
             volume=1,
-            name_underscore=comic_name_underscore,
         )
         c = Comic.objects.get_or_create(
             series=s, issue=issue_number, pub_date=release_date, price=price
@@ -85,8 +85,8 @@ def create_excel_order_monthly():
     for series in data_count:
         if series.num_subs != 0:
             comicqueryset = Comic.objects.filter(
-                series=series.id, pub_date__month=date.today().month - 1
-            )
+                series=series.id, pub_date__month=date.today().month - 2
+            )  # month - 2 is for testing purposes, once the database is properly filled and only give the order form for the actual month
             for element in comicqueryset:
                 issue_data = [
                     series.publisher,

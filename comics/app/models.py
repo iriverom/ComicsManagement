@@ -4,7 +4,9 @@ from django.template.defaultfilters import slugify
 
 
 class Client(models.Model):
-    client_number = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    client_number = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)], unique=True
+    )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     birthdate = models.DateField(blank=True)
@@ -26,7 +28,6 @@ class Client(models.Model):
 class Series(models.Model):
     publisher = models.CharField(max_length=30)
     name = models.CharField(max_length=60)
-    name_underscore = models.CharField(max_length=60)
     volume = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     slug = models.SlugField()
 
@@ -67,8 +68,3 @@ class Subscription(models.Model):
 
 
 # su = Subscription(series = Series.objects.get(publisher = "Marvel", name = "X-Men", volume = 1),
-#   client = Client.objects.get(client_number="548"), begin_date = "2021-02-01", end_date= "2021-03-03")
-
-
-# class Orders(models.Model):
-# client_id	comic_id

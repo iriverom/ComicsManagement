@@ -1,5 +1,5 @@
 from app.fake_data import create_fake_clients, create_fake_subscriptions
-from app.models import Client, Subscription
+from app.models import Client, Subscription, Series
 import pytest
 
 pytestmark = pytest.mark.django_db
@@ -23,6 +23,7 @@ def test_create_fake_subscriptions():
     assert Client.objects.all().count() == 1
     assert not Subscription.objects.all()
 
+    Series.objects.create(publisher="DC", name="Batman", volume=3)
 
-#    create_fake_subscriptions()
-#    assert Subscription.objects.all()
+    create_fake_subscriptions()
+    assert Subscription.objects.all()

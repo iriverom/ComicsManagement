@@ -1,9 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from app.data_processing import (
-    get_df_marvel,
-    create_excel_order_monthly,
-)
+from app.data_processing import create_excel_order_monthly
 from app.models import Client, Comic, Series, Subscription
 from app.graph_data import count_data, _client_subscription_classification
 import pandas as pd
@@ -104,11 +101,12 @@ class remove_client(DeleteView):
     success_url = "app/dashboard"
 
 
-def approve_group(request, pk):
+def end_subscription(request, pk):
     sub = Subscription.objects.get(pk=pk)
     sub.end_date = date.today()
     sub.save()
     return HttpResponseRedirect(reverse("client"))
+    # reverse("client", kwargs={'pk': self.pk, 'slug': self.slug })
 
 
 def client_index(request):

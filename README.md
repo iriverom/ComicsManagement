@@ -28,7 +28,7 @@ After having created a superuser, you can just start the server and open the add
 ```bash
 python manage.py runserver
 ```
-![Dashboard Screenshot]("dashboard_screenshot.JPG")
+![Dashboard Screenshot](dashboard_screenshot.JPG)
 
 After you have succesfully logged in, the dashboard will open. Here you can see a simple overview of the state of the data with two graphs: one with the top 10 Series by number of clients subscribed and another one with how many customers have how many subscriptions. 
 

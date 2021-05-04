@@ -1,13 +1,13 @@
 # Comics Management Website
 
-Comics Management Website is a web application to manage the comic book subscriptions of any comic book store that works with the Previews system (you can check out this link here if you don't know what the Previews system is: [What is PREVIEWS?](https://www.previewsworld.com/Article/166508-What-is-PREVIEWS)). The website has its own database with clients, all the series that are being published and a system to start and stop subscriptions for any client in the database.
+Comics Management Website is a web application to manage the comic book subscriptions of any comic book store that works with the Previews system (you can check out this link here if you don't know what the Previews system is: [What is PREVIEWS?](https://www.previewsworld.com/Article/166508-What-is-PREVIEWS)). The website has its own database with clients, all the series that are being published (downloaded automatically from the diamond website) and a system to start and stop subscriptions for any client in the database.
 
 ## Installation
 
 Clone the following Git Repository: https://github.com/iriverom/ComicsManagement
 
 Do a poetry install.
-If the Database is empty, create an admin by creating a superuser and run the file script.py to populate the database. (At the moment, and only for testing purposes, the database is also included in the git repository filed with fake client data).
+If the Database is empty, create an admin by creating a superuser and run the file create_test_data.py to populate the database. (At the moment, and only for testing purposes, the database is also included in the git repository filed with fake client data). This script will populate the database with fake clients, all series published in March (the January file from Diamond is downloaded and then parsed) and fake subscriptions so that all functionality of the website can be tested.
 
 ```bash
 poetry install

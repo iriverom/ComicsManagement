@@ -3,8 +3,16 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 from . import views
 from .views import remove_client
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register("clients", views.ClientViewSet, basename="clients")
+router.register("series", views.SeriesViewSet, basename="series")
+router.register("comic", views.ComicViewSet, basename="comic")
+router.register("subscription", views.SubscriptionViewSet, basename="subscription")
 
 urlpatterns = [
+    path("api/", include(router.urls)),
     path("excel/", views.create_excel, name="excel"),
     path("search/", views.search_view, name="search_view"),
     path("graph/", views.dashboard_site, name="dashboard"),

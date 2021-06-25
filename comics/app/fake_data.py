@@ -1,5 +1,5 @@
 from faker import Faker
-from app.models import Client, Series, Comic, Subscription
+from app.models import Client, Series, Subscription
 from datetime import date
 import random
 

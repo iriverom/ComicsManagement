@@ -13,6 +13,33 @@ from datetime import date
 from io import BytesIO
 from django.views.generic.edit import DeleteView
 from django.shortcuts import redirect
+from .serializers import (
+    ClientSerializer,
+    SeriesSerializer,
+    ComicSerializer,
+    SubscriptionSerializer,
+)
+from rest_framework import viewsets
+
+
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+
+class SeriesViewSet(viewsets.ModelViewSet):
+    queryset = Series.objects.all()
+    serializer_class = SeriesSerializer
+
+
+class ComicViewSet(viewsets.ModelViewSet):
+    queryset = Comic.objects.all()
+    serializer_class = ComicSerializer
+
+
+class SubscriptionViewSet(viewsets.ModelViewSet):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
 
 
 def dashboard_site(request):

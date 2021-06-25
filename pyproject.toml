@@ -17,6 +17,7 @@ pytest-cov = "^2.11.1"
 pytest-factoryboy = "^2.1.0"
 pytest-xdist = "^2.2.1"
 django-coverage-plugin = "^1.8.0"
+djangorestframework = "^3.12.4"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^20.8b1", allow-prereleases = true}

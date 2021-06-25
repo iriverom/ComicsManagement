@@ -1,5 +1,5 @@
 import pandas as pd
-from app.models import Client, Series, Comic, Subscription
+from app.models import Series, Comic
 from django.db.models import Count, Q
 from datetime import date
 import urllib.request
